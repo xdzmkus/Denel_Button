@@ -1,0 +1,29 @@
+#######################################
+# Syntax Coloring Map For Denel_Button
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Denel_Button		KEYWORD1
+BUTTON_EVENT		KEYWORD1
+BUTTON_CONNECTED	KEYWORD1
+BUTTON_NORMAL		KEYWORD1
+ButtonEventHandler	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+getPin				KEYWORD2
+check				KEYWORD2
+setEventHandler		KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+delayDebounce		LITERAL1
+delayRepeatedClick	LITERAL1
+delayLongPress		LITERAL1
