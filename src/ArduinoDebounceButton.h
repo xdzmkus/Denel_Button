@@ -1,6 +1,12 @@
 #ifndef _ARDUINODEBOUNCEBUTTON_H
 #define _ARDUINODEBOUNCEBUTTON_H
 
+#if defined(ARDUINO) && ARDUINO >= 100
+#include "Arduino.h"
+#else
+#include "WProgram.h"
+#endif
+
 #include "DebounceButton.hpp"
 
 class ArduinoDebounceButton : public DebounceButton

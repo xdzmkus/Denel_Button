@@ -1,12 +1,6 @@
 #ifndef _DEBOUNCEBUTTON_HPP
 #define _DEBOUNCEBUTTON_HPP
 
-#if defined(ARDUINO) && ARDUINO >= 100
-#include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
-
 class DebounceButton;
 
 /**
