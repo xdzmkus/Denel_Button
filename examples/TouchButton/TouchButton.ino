@@ -2,13 +2,13 @@
   Button example
  */
 
-#define BTN_PIN 10
+#include "ArduinoDebounceButton.h"
 
-#include "Denel_Button.h"
+#define BTN_PIN 2
 
-Denel_Button btn(BTN_PIN, BUTTON_CONNECTED::VCC, BUTTON_NORMAL::OPEN);
+ArduinoDebounceButton btn(BTN_PIN, BUTTON_CONNECTED::VCC, BUTTON_NORMAL::OPEN);
 
-void handleButtonEvent(const Denel_Button* button, BUTTON_EVENT eventType)
+void handleButtonEvent(const DebounceButton* button, BUTTON_EVENT eventType)
 {
 	switch (eventType)
 	{
@@ -39,6 +39,8 @@ void setup()
 {
 	Serial.begin(115200);
 
+	btn.initPin();
+
 	Serial.print("Button state while booting: ");
 	Serial.println(btn.check());
 
@@ -47,5 +49,5 @@ void setup()
 
 void loop()
 {
-    btn.check();
+	btn.check();
 }
