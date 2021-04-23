@@ -13,22 +13,22 @@ void handleButtonEvent(const DebounceButton* button, BUTTON_EVENT eventType)
 	switch (eventType)
 	{
 	case BUTTON_EVENT::Pressed:
-		Serial.println("Pressed");
+		Serial.println(F("Pressed"));
 		break;
 	case BUTTON_EVENT::Released:
-		Serial.println("Released");
+		Serial.println(F("Released"));
 		break;
 	case BUTTON_EVENT::Clicked:
-		Serial.println("Clicked");
+		Serial.println(F("Clicked"));
 		break;
 	case BUTTON_EVENT::DoubleClicked:
-		Serial.println("DoubleClicked");
+		Serial.println(F("DoubleClicked"));
 		break;
 	case BUTTON_EVENT::RepeatClicked:
-		Serial.println("RepeatClicked");
+		Serial.println(F("RepeatClicked"));
 		break;
 	case BUTTON_EVENT::LongPressed:
-		Serial.println("LongPressed");
+		Serial.println(F("LongPressed"));
 		break;
 	default:
 		break;
@@ -41,7 +41,7 @@ void setup()
 
 	btn.initPin();
 
-	Serial.print("Button state while booting: ");
+	Serial.print(F("Button state while booting: "));
 	Serial.println(btn.check());
 
 	btn.setEventHandler(handleButtonEvent);

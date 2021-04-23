@@ -109,7 +109,7 @@ protected:
         bool previousState : 1;
         uint8_t clicks : 6;
     }
-    buttonFlags;
+    buttonFlags = { 0 };
 
     bool isDebounced(unsigned long now);
     void processPressed(unsigned long now);
