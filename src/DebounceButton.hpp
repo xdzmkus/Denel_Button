@@ -102,16 +102,14 @@ protected:
     unsigned long lastPressedTime = 0;
     unsigned long lastReleasedTime = 0;
 
-    uint8_t clicks = 0;
-
     // Internal flags
     struct ButtonFlags
     {
         bool currrentState : 1;
         bool previousState : 1;
-        bool debounced : 1;
-        bool longPressed : 1;
-    } buttonFlags;
+        uint8_t clicks : 6;
+    }
+    buttonFlags;
 
     bool isDebounced(unsigned long now);
     void processPressed(unsigned long now);
@@ -150,19 +148,29 @@ void DebounceButton::processPressed(unsigned long now)
     // Released to Pressed pulse
     if (lastPressedTime <= lastReleasedTime)
     {
-        lastPressedTime = now;
+        lastPressedTime = now | 1; // just avoid 0 (duplicated event)
+        lastReleasedTime = 0;
 
         eventHandler(this, BUTTON_EVENT::Pressed);
+
+        buttonFlags.clicks++;
 
         return;
     }
         
-    // check if button holded
+    // check if button is long pressed
     if (now - lastPressedTime > delayLongPress)
     {
-        eventHandler(this, BUTTON_EVENT::LongPressed);
-    }
+        // decrement count of clicks
+        if (buttonFlags.clicks == 2)
+            eventHandler(this, BUTTON_EVENT::Clicked);
+        else if (buttonFlags.clicks == 3)
+            eventHandler(this, BUTTON_EVENT::DoubleClicked);
 
+        eventHandler(this, BUTTON_EVENT::LongPressed);
+
+        buttonFlags.clicks = 0; // reset clicks after long press
+    }
 }
     
 void DebounceButton::processReleased(unsigned long now)
@@ -174,13 +182,11 @@ void DebounceButton::processReleased(unsigned long now)
     //  Pressed to Released pulse
     if (lastPressedTime > lastReleasedTime)
     {
-        lastReleasedTime = now;
+        lastReleasedTime = lastPressedTime;
         eventHandler(this, BUTTON_EVENT::Released);
 
-        clicks++;
-
         // button is repeatedly pressed
-        if (clicks > 2)
+        if (buttonFlags.clicks > 2)
         {
             eventHandler(this, BUTTON_EVENT::RepeatClicked);
         }
@@ -189,19 +195,18 @@ void DebounceButton::processReleased(unsigned long now)
     }
 
     // process clicks
-    if (clicks == 0)
-        return;
+    if (buttonFlags.clicks == 0) return;
 
     // chek if repeated clicks are still possible
     if ((now - lastPressedTime) > delayRepeatedClick)
     {
         // no more repeated clicks possible
-        if (clicks == 1)
+        if (buttonFlags.clicks == 1)
             eventHandler(this, BUTTON_EVENT::Clicked);
-        else if (clicks == 2)
+        else if (buttonFlags.clicks == 2)
             eventHandler(this, BUTTON_EVENT::DoubleClicked);
 
-        clicks = 0; // reset clicks
+        buttonFlags.clicks = 0; // reset clicks
     }
 }
 
@@ -209,24 +214,16 @@ bool DebounceButton::isDebounced(unsigned long now)
 {
     if (buttonFlags.currrentState == buttonFlags.previousState)
     {
-        // check if timer overloaded
-        if (now < lastDebounceTime)
+        // check if button has the same state at least debounce delay 
+        if ((now - lastDebounceTime) > delayDebounce)
         {
-            lastDebounceTime = lastPressedTime = lastReleasedTime = now;
-        }
-        else if ((now - lastDebounceTime) > delayDebounce)
-        {
-            // button has the same state at least debounce delay 
-            buttonFlags.debounced = true;
-        }
-
-        if (buttonFlags.debounced)
+            lastDebounceTime = now;
             return true;
+        }
     }
     else
     {
-        // button state is changed - still debouncing
-        buttonFlags.debounced = false;
+        // button state is changed - still bouncing
         buttonFlags.previousState = buttonFlags.currrentState;
         lastDebounceTime = now;
     }
