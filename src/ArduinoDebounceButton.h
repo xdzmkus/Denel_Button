@@ -7,7 +7,7 @@
 #include "WProgram.h"
 #endif
 
-#include "DebounceButton.hpp"
+#include "DebounceButton.h"
 
 class ArduinoDebounceButton : public DebounceButton
 {
@@ -25,12 +25,12 @@ public:
 
 protected:
 
-	virtual bool getPinState()
+	virtual bool getPinState() override
 	{
 		return static_cast<bool>(digitalRead(pin));
 	}
 
-	virtual unsigned long getTicks()
+	virtual unsigned long getTicks() override
 	{
 		return millis();
 	}
