@@ -9,7 +9,7 @@
 ArduinoDebounceButton           KEYWORD1
 DebounceButton                  KEYWORD1
 BtnEventHandler                 KEYWORD1
-BtnEventQueue                   KEYWORD1
+EventsQueue                     KEYWORD1
 BUTTON_EVENT                    KEYWORD1
 BUTTON_CONNECTED                KEYWORD1
 BUTTON_NORMAL                   KEYWORD1

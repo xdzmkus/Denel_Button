@@ -3,14 +3,14 @@
  */
 
 #include "ArduinoDebounceButton.h"
-#include "BtnEventQueue.hpp"
+#include "EventsQueue.hpp"
 #include <TimerOne.h>
 
-#define BTN_PIN 2
+#define BTN_PIN 4
 
 ArduinoDebounceButton btn(BTN_PIN, BUTTON_CONNECTED::GND, BUTTON_NORMAL::OPEN);
 
-BtnEventQueue<10> queue;
+EventsQueue<BUTTON_EVENT, 10> queue;
 
 void handleButtonEvent(const DebounceButton* button, BUTTON_EVENT eventType)
 {
