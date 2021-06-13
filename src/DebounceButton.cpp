@@ -1,6 +1,6 @@
 #include "DebounceButton.h"
 
-DebounceButton::DebounceButton(uint8_t pin, BUTTON_CONNECTED c = BUTTON_CONNECTED::VCC, BUTTON_NORMAL n = BUTTON_NORMAL::OPEN)
+DebounceButton::DebounceButton(uint8_t pin, BUTTON_CONNECTED c, BUTTON_NORMAL n)
 	: pin(pin), connectedTo(c), normalState(n)
 {
 }

@@ -29,9 +29,15 @@ pop                             KEYWORD2
 length                          KEYWORD2
 
 ########################################
-# Constants (LITERAL1)
+# Constants (LITERAL2)
 ########################################
 
-delayDebounce                   LITERAL1
-delayRepeatedClick              LITERAL1
-delayLongPress                  LITERAL1
+delayDebounce                   LITERAL2
+delayRepeatedClick              LITERAL2
+delayLongPress                  LITERAL2
+
+VCC                             LITERAL2
+GND                             LITERAL2
+
+OPEN                            LITERAL2
+CLOSE                           LITERAL2
